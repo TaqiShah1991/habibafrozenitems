@@ -33,8 +33,13 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-accent/95 backdrop-blur-sm">
       <div className="container flex items-center justify-between py-4">
         <a href="#" className="flex items-center gap-2 group">
-          <UtensilsCrossed className="w-8 h-8 text-primary transition-transform duration-500 group-hover:scale-110" />
-          <span className="text-2xl font-display font-bold text-accent-foreground tracking-wide group-hover:text-primary transition-colors">HABIBA</span>
+          <div className="bg-primary/10 p-1.5 rounded-lg border border-primary/20 group-hover:border-primary/40 transition-colors">
+            <UtensilsCrossed className="w-6 h-6 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-2xl font-display font-bold text-accent-foreground leading-[1.1] tracking-wider group-hover:text-primary transition-colors">HABIBA</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-accent-foreground/70 font-semibold">Frozen Items</span>
+          </div>
         </a>
 
         {/* Desktop */}
