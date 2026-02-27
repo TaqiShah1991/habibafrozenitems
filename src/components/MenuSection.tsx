@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { menuItems, type MenuCategory } from "@/data/menuData";
 import MenuCard from "./MenuCard";
 import AnimatedSection from "./AnimatedSection";
@@ -13,6 +13,23 @@ const filters: { label: string; value: MenuCategory | "all" }[] = [
 
 const MenuSection = () => {
   const [active, setActive] = useState<MenuCategory | "all">("all");
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#specials') {
+        setActive('specials');
+      } else if (window.location.hash === '#menu') {
+        setActive('all');
+      }
+    };
+
+    // Check on mount
+    handleHashChange();
+
+    // Listen for changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const filtered =
     active === "all"
@@ -34,16 +51,15 @@ const MenuSection = () => {
         </AnimatedSection>
 
         <AnimatedSection>
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
+          <div id="specials" className="flex flex-wrap justify-center gap-2 mb-12 scroll-mt-24">
             {filters.map((f) => (
               <button
                 key={f.value}
                 onClick={() => setActive(f.value)}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
-                  active === f.value
+                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${active === f.value
                     ? "bg-primary text-primary-foreground shadow-md"
                     : "bg-secondary text-secondary-foreground hover:bg-primary/10"
-                }`}
+                  }`}
               >
                 {f.label}
               </button>
