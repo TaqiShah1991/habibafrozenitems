@@ -1,6 +1,5 @@
-import { ShoppingCart, Plus, Minus, Trash2, MessageCircle, ArrowLeft, MapPin, LocateFixed } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Trash2, MessageCircle, ArrowLeft, X } from "lucide-react";
 import { useState } from "react";
-import MapPicker from "./MapPicker";
 import { useCart } from "@/context/CartContext";
 import {
   Drawer,
@@ -25,26 +24,6 @@ const CartDrawer = () => {
     address: "",
     paymentMethod: "cod"
   });
-  const [isMapOpen, setIsMapOpen] = useState(false);
-
-  const handleLocationSelect = (lat: number, lng: number) => {
-    const mapLink = `\nhttps://maps.google.com/?q=${lat},${lng}`;
-    setCustomerDetails(prev => ({
-      ...prev,
-      address: prev.address ? prev.address + mapLink : mapLink.trim()
-    }));
-  };
-
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => handleLocationSelect(pos.coords.latitude, pos.coords.longitude),
-        (err) => alert("Could not get current location. Please ensure location services are enabled.")
-      );
-    } else {
-      alert("Geolocation is not supported by your browser.");
-    }
-  };
 
   const handleWhatsAppOrder = () => {
     if (!customerDetails.name || !customerDetails.contact || !customerDetails.address) {
@@ -87,9 +66,9 @@ const CartDrawer = () => {
 
   return (
     <Drawer open={isCartOpen} onOpenChange={setIsCartOpen}>
-      <DrawerContent className="max-h-[85vh]">
-        <DrawerHeader>
-          <DrawerTitle className="font-display flex items-center gap-2">
+      <DrawerContent className="max-h-[90vh] flex flex-col">
+        <DrawerHeader className="relative">
+          <DrawerTitle className="font-display flex items-center gap-2 pr-8">
             {isCheckout && (
               <button onClick={() => setIsCheckout(false)} className="hover:text-primary transition-colors">
                 <ArrowLeft size={20} />
@@ -97,6 +76,10 @@ const CartDrawer = () => {
             )}
             {isCheckout ? "Checkout Details" : "Your Cart"}
           </DrawerTitle>
+          <DrawerClose className="absolute right-4 top-4 rounded-full p-2 hover:bg-muted transition-colors">
+            <X size={20} className="text-muted-foreground" />
+            <span className="sr-only">Close</span>
+          </DrawerClose>
           <DrawerDescription>
             {isCheckout
               ? "Please provide your details below to place the order."
@@ -156,64 +139,63 @@ const CartDrawer = () => {
               </div>
             ))}
 
-            <div>
-              <label className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
-                Order Note (optional)
+            <div className="pt-2">
+              <label className="text-xs font-semibold text-foreground/80 uppercase tracking-widest pl-1 mb-1.5 block">
+                Order Note <span className="text-muted-foreground/50 lowercase normal-case">(optional)</span>
               </label>
               <textarea
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 rows={2}
                 placeholder="Any special instructions?"
-                className="w-full mt-1 px-3 py-2 rounded-md bg-muted border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm resize-none"
+                className="w-full px-4 py-3 rounded-xl bg-background border border-input text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary md:text-sm text-[16px] resize-none shadow-sm transition-all"
               />
             </div>
           </div>
         )}
 
         {totalItems > 0 && isCheckout && (
-          <div className="px-4 overflow-y-auto flex-1 space-y-4 max-h-[50vh] pb-4">
-            <div>
-              <label className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Name <span className="text-destructive">*</span></label>
-              <input type="text" name="name" value={customerDetails.name} onChange={handleDetailsChange} placeholder="Enter your full name" className="w-full mt-1 px-3 py-2 rounded-md bg-muted border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm" required />
+          <div className="px-4 overflow-y-auto flex-1 space-y-5 pb-6">
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-foreground/80 uppercase tracking-widest pl-1">Name <span className="text-destructive">*</span></label>
+              <input type="text" name="name" value={customerDetails.name} onChange={handleDetailsChange} placeholder="Enter your full name" className="w-full px-4 py-3 rounded-xl bg-background border border-input text-foreground focus:outline-none focus:ring-2 focus:ring-primary md:text-sm text-[16px] shadow-sm transition-all" required />
             </div>
-            <div>
-              <label className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Contact Number <span className="text-destructive">*</span></label>
-              <input type="tel" name="contact" value={customerDetails.contact} onChange={handleDetailsChange} placeholder="Enter your phone number" className="w-full mt-1 px-3 py-2 rounded-md bg-muted border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm" required />
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-foreground/80 uppercase tracking-widest pl-1">Contact Number <span className="text-destructive">*</span></label>
+              <input type="tel" name="contact" value={customerDetails.contact} onChange={handleDetailsChange} placeholder="Enter your phone number" className="w-full px-4 py-3 rounded-xl bg-background border border-input text-foreground focus:outline-none focus:ring-2 focus:ring-primary md:text-sm text-[16px] shadow-sm transition-all" required />
             </div>
-            <div>
-              <label className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Delivery Address <span className="text-destructive">*</span></label>
-              <div className="relative mt-1">
-                <textarea name="address" value={customerDetails.address} onChange={handleDetailsChange} rows={2} placeholder="Enter your delivery address" className="w-full px-3 py-2 pr-14 rounded-md bg-muted border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm resize-none" required />
-                <div className="absolute bottom-2 right-2 flex gap-1 bg-background/50 backdrop-blur-sm rounded-md p-1 border border-border">
-                  <button type="button" onClick={() => setIsMapOpen(true)} className="text-primary hover:opacity-80 transition-opacity p-1 bg-background rounded" title="Pick on Map">
-                    <MapPin size={16} />
-                  </button>
-                  <button type="button" onClick={getCurrentLocation} className="text-[hsl(142,70%,40%)] hover:opacity-80 transition-opacity p-1 bg-background rounded" title="Use Current Location">
-                    <LocateFixed size={16} />
-                  </button>
-                </div>
-              </div>
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-foreground/80 uppercase tracking-widest pl-1">Delivery Address <span className="text-destructive">*</span></label>
+              <textarea name="address" value={customerDetails.address} onChange={handleDetailsChange} rows={2} placeholder="Enter your delivery address" className="w-full px-4 py-3 rounded-xl bg-background border border-input text-foreground focus:outline-none focus:ring-2 focus:ring-primary md:text-sm text-[16px] resize-none shadow-sm transition-all" required />
             </div>
-            <div>
-              <label className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Payment Method</label>
-              <div className="mt-2 space-y-2">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="paymentOption" checked={customerDetails.paymentMethod === "cod"} onChange={() => setCustomerDetails({ ...customerDetails, paymentMethod: "cod" })} className="w-4 h-4 text-primary bg-muted border-border focus:ring-primary focus:ring-2" />
-                  <span className="text-sm font-medium">Cash on Delivery (COD)</span>
+            <div className="space-y-2 pt-1">
+              <label className="text-xs font-semibold text-foreground/80 uppercase tracking-widest pl-1">Payment Method</label>
+              <div className="grid grid-cols-2 gap-3 mt-1">
+                <label className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl border-2 cursor-pointer transition-all ${customerDetails.paymentMethod === "cod" ? 'border-primary bg-primary/5 text-primary' : 'border-border/50 bg-background hover:border-border text-foreground'}`}>
+                  <input type="radio" name="paymentOption" checked={customerDetails.paymentMethod === "cod"} onChange={() => setCustomerDetails({ ...customerDetails, paymentMethod: "cod" })} className="sr-only" />
+                  <span className="text-[13px] font-semibold text-center leading-tight">Cash on<br />Delivery</span>
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="paymentOption" checked={customerDetails.paymentMethod === "online"} onChange={() => setCustomerDetails({ ...customerDetails, paymentMethod: "online" })} className="w-4 h-4 text-primary bg-muted border-border focus:ring-primary focus:ring-2" />
-                  <span className="text-sm font-medium">Online Bank Transfer</span>
+                <label className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl border-2 cursor-pointer transition-all ${customerDetails.paymentMethod === "online" ? 'border-primary bg-primary/5 text-primary' : 'border-border/50 bg-background hover:border-border text-foreground'}`}>
+                  <input type="radio" name="paymentOption" checked={customerDetails.paymentMethod === "online"} onChange={() => setCustomerDetails({ ...customerDetails, paymentMethod: "online" })} className="sr-only" />
+                  <span className="text-[13px] font-semibold text-center leading-tight">Online<br />Bank Transfer</span>
                 </label>
               </div>
 
               {customerDetails.paymentMethod === "online" && (
-                <div className="mt-3 p-3 bg-secondary/30 rounded-md border border-secondary text-sm">
-                  <p className="font-semibold text-primary mb-1">Bank Details:</p>
-                  <p><span className="text-muted-foreground">Bank Name:</span> Habib Bank Limited</p>
-                  <p><span className="text-muted-foreground">Account No:</span> <span className="font-mono">1011-79018495-03</span></p>
-                  <p className="mt-2 text-xs text-muted-foreground italic">Please send the payment receipt along with your order on WhatsApp.</p>
+                <div className="mt-4 p-4 bg-muted/50 rounded-xl border border-border/50 text-sm animate-in fade-in slide-in-from-top-2 duration-200">
+                  <p className="font-bold text-primary mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    Bank Details
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center"><span className="text-muted-foreground font-medium text-[13px]">Bank Name</span> <span className="font-semibold text-sm">Habib Bank Limited</span></div>
+                    <div className="flex justify-between items-center"><span className="text-muted-foreground font-medium text-[13px]">Account No</span> <span className="font-mono font-bold bg-background px-2 py-1 rounded-md border text-[13px] tracking-wider">1011-79018495-03</span></div>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-border/50">
+                    <p className="text-[11px] text-muted-foreground/80 font-medium leading-relaxed bg-background/50 p-2 rounded-lg border border-border/30 border-dashed text-center">
+                      Please send the payment receipt along with your order on WhatsApp.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
@@ -266,11 +248,6 @@ const CartDrawer = () => {
           </DrawerFooter>
         )}
       </DrawerContent>
-      <MapPicker
-        open={isMapOpen}
-        onClose={() => setIsMapOpen(false)}
-        onSelect={handleLocationSelect}
-      />
     </Drawer>
   );
 };

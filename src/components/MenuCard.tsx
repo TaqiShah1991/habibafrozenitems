@@ -6,7 +6,7 @@ const MenuCard = ({ item }: { item: MenuItem }) => {
   const { addItem } = useCart();
 
   return (
-    <div className="group bg-card rounded-lg overflow-hidden shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow duration-300">
+    <div className="group flex flex-col h-full bg-card rounded-lg overflow-hidden shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow duration-300">
       <div className="relative overflow-hidden aspect-[4/3]">
         <img
           src={item.image}
@@ -20,10 +20,10 @@ const MenuCard = ({ item }: { item: MenuItem }) => {
           </span>
         )}
       </div>
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-grow">
         <h3 className="font-display font-semibold text-lg text-card-foreground">{item.name}</h3>
         <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center justify-between mt-auto pt-4">
           <div>
             <span className="text-xs text-muted-foreground uppercase tracking-wider">Per Dozen</span>
             <p className="text-primary font-bold text-lg">{item.price}/-</p>
