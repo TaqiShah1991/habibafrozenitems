@@ -241,7 +241,12 @@ const CartDrawer = () => {
         {totalItems === 0 && (
           <DrawerFooter>
             <DrawerClose asChild>
-              <button className="w-full bg-primary text-primary-foreground py-3 rounded-md font-semibold hover:opacity-90 transition-opacity">
+              <button
+                onClick={() => {
+                  document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full bg-primary text-primary-foreground py-3 rounded-md font-semibold hover:opacity-90 transition-opacity"
+              >
                 Browse Menu
               </button>
             </DrawerClose>
