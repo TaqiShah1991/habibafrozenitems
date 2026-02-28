@@ -16,7 +16,6 @@ const WHATSAPP_NUMBER = "923349422514";
 
 const CartDrawer = () => {
   const { items, totalItems, totalPrice, updateQuantity, removeItem, clearCart, isCartOpen, setIsCartOpen } = useCart();
-  const [note, setNote] = useState("");
   const [isCheckout, setIsCheckout] = useState(false);
   const [customerDetails, setCustomerDetails] = useState({
     name: "",
@@ -50,9 +49,6 @@ const CartDrawer = () => {
       message += `\n*(Please see attached payment receipt)*`;
     }
 
-    if (note.trim()) {
-      message += `\n\n📝 *Note:* ${note.trim()}`;
-    }
     message += `\n\nPlease confirm availability and delivery details. Thank you!`;
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
@@ -139,18 +135,6 @@ const CartDrawer = () => {
               </div>
             ))}
 
-            <div className="pt-2">
-              <label className="text-xs font-semibold text-foreground/80 uppercase tracking-widest pl-1 mb-1.5 block">
-                Order Note <span className="text-muted-foreground/50 lowercase normal-case">(optional)</span>
-              </label>
-              <textarea
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                rows={2}
-                placeholder="Any special instructions?"
-                className="w-full px-4 py-3 rounded-xl bg-background border border-input text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary md:text-sm text-[16px] resize-none shadow-sm transition-all"
-              />
-            </div>
           </div>
         )}
 
