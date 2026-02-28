@@ -7,10 +7,15 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = encodeURIComponent(
-      `Name: ${form.name}\nPhone: ${form.phone}\nOrder: ${form.message}`
-    );
-    window.open(`https://wa.me/923349422514?text=${text}`, "_blank");
+    let text = `🛒 *New Inquiry from Habiba Website*\n\n`;
+    text += `👤 *Customer Details:*\n`;
+    text += `Name: ${form.name}\n`;
+    text += `Contact: ${form.phone}\n\n`;
+    text += `📝 *Message / Order:*\n${form.message}`;
+
+    // Replace newline with CRLF to ensure proper formatting on Android WhatsApp
+    const whatsappMessage = encodeURIComponent(text.replace(/\n/g, '\r\n'));
+    window.open(`https://wa.me/923349422514?text=${whatsappMessage}`, "_blank");
   };
 
   return (

@@ -6,6 +6,7 @@ import beefSamosa from "@/assets/beef-samosa.jpg";
 import chickenVegSamosa from "@/assets/chicken-veg-samosa.jpg";
 import chickenSpringRoll from "@/assets/chicken-spring-roll.jpg";
 import chickenWontons from "@/assets/chicken-wontons.jpg";
+import mashKiDaalBhallay from "@/assets/mash-ki-daal-bhallay.png";
 
 export type MenuCategory = "kababs" | "koftas" | "wontons" | "specials";
 
@@ -17,6 +18,7 @@ export interface MenuItem {
   image: string;
   category: MenuCategory;
   badge?: string;
+  unit?: string;
 }
 
 export const menuItems: MenuItem[] = [
@@ -84,5 +86,14 @@ export const menuItems: MenuItem[] = [
     price: 780,
     image: chickenWontons,
     category: "wontons",
+  },
+  {
+    id: "mash-ki-daal-bhallay",
+    name: "Mash ki Dall k Bhallay",
+    description: "Soft and delicious lentil dumplings",
+    price: 690,
+    image: mashKiDaalBhallay,
+    category: "specials",
+    unit: "15 Pieces",
   },
 ];

@@ -25,7 +25,7 @@ const MenuCard = ({ item }: { item: MenuItem }) => {
         <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
         <div className="flex items-center justify-between mt-auto pt-4">
           <div>
-            <span className="text-xs text-muted-foreground uppercase tracking-wider">Per Dozen</span>
+            <span className="text-xs text-muted-foreground uppercase tracking-wider">{item.unit || "Per Dozen"}</span>
             <p className="text-primary font-bold text-lg">{item.price}/-</p>
           </div>
           <button

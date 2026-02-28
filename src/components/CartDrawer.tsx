@@ -50,8 +50,12 @@ const CartDrawer = () => {
     }
 
     message += `\n\nPlease confirm availability and delivery details. Thank you!`;
+
+    // Replace newline with CRLF to ensure proper formatting on Android WhatsApp
+    const whatsappMessage = encodeURIComponent(message.replace(/\n/g, '\r\n'));
+
     window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`,
       "_blank"
     );
   };
