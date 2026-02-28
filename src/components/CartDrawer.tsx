@@ -188,8 +188,9 @@ const CartDrawer = () => {
                     Bank Details
                   </p>
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center"><span className="text-muted-foreground font-medium text-[13px]">Bank Name</span> <span className="font-semibold text-sm">Habib Bank Limited</span></div>
-                    <div className="flex justify-between items-center"><span className="text-muted-foreground font-medium text-[13px]">Account No</span> <span className="font-mono font-bold bg-background px-2 py-1 rounded-md border text-[13px] tracking-wider">1011-79018495-03</span></div>
+                    <div className="flex justify-between items-center"><span className="text-muted-foreground font-medium text-[13px]">Bank Name</span> <span className="font-semibold text-sm">Bank Alfalah Limited</span></div>
+                    <div className="flex justify-between items-center"><span className="text-muted-foreground font-medium text-[13px]">Account Title</span> <span className="font-semibold text-sm">MUHAMMAD SHUJA ABBAS ZAIDI</span></div>
+                    <div className="flex justify-between items-center"><span className="text-muted-foreground font-medium text-[13px]">Account No</span> <span className="font-mono font-bold bg-background px-2 py-1 rounded-md border text-[13px] tracking-wider">03441006936736</span></div>
                   </div>
                   <div className="mt-4 pt-3 border-t border-border/50">
                     <p className="text-[11px] text-muted-foreground/80 font-medium leading-relaxed bg-background/50 p-2 rounded-lg border border-border/30 border-dashed text-center">
