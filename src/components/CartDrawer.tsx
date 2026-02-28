@@ -65,7 +65,7 @@ const CartDrawer = () => {
   };
 
   return (
-    <Drawer open={isCartOpen} onOpenChange={setIsCartOpen}>
+    <Drawer open={isCartOpen} onOpenChange={setIsCartOpen} repositionInputs={false}>
       <DrawerContent className="max-h-[90vh] flex flex-col">
         <DrawerHeader className="relative">
           <DrawerTitle className="font-display flex items-center gap-2 pr-8">
