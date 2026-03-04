@@ -3,14 +3,15 @@ import { useState } from "react";
 import AnimatedSection from "./AnimatedSection";
 
 const ContactSection = () => {
-  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", message: "", address: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     let text = `🛒 *New Inquiry from Habiba Website*\n\n`;
     text += `👤 *Customer Details:*\n`;
     text += `Name: ${form.name}\n`;
-    text += `Contact: ${form.phone}\n\n`;
+    text += `Contact: ${form.phone}\n`;
+    text += `Address: ${form.address}\n\n`;
     text += `📝 *Message / Order:*\n${form.message}`;
 
     // Replace newline with CRLF to ensure proper formatting on Android WhatsApp
@@ -84,6 +85,16 @@ const ContactSection = () => {
                     className="w-full mt-1 px-4 py-3 rounded-md bg-accent-foreground/5 border border-accent-foreground/10 text-accent-foreground placeholder:text-accent-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
+              </div>
+              <div>
+                <label className="text-xs text-primary font-semibold uppercase tracking-wider">Address</label>
+                <input
+                  type="text"
+                  placeholder="Your Delivery Address"
+                  value={form.address}
+                  onChange={(e) => setForm({ ...form, address: e.target.value })}
+                  className="w-full mt-1 px-4 py-3 rounded-md bg-accent-foreground/5 border border-accent-foreground/10 text-accent-foreground placeholder:text-accent-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary"
+                />
               </div>
               <div>
                 <label className="text-xs text-primary font-semibold uppercase tracking-wider">Your Message / Order Details</label>
