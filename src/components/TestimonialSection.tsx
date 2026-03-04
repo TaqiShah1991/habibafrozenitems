@@ -12,14 +12,14 @@ import {
 
 const testimonials = [
   {
-    quote: "The Shami Kababs are exactly like my grandmother used to make. Finding such authentic, clean, and delicious homemade food is a blessing for busy families!",
-    author: "Mariam Farooq",
-    role: "Loyal Customer"
+    quote: "Asalam o Alykom,\nI wanted to give you feedback that all your items were very tasty and the cleanliness was very marvelous. My family and I thank you and will definitely place future orders Insha Allah \nRegards",
+    author: "Qasim Sherazi",
+    role: "Happy Customer"
   },
   {
-    quote: "Absolutely wonderful experience! The food is always fresh and you can taste the quality ingredients in every bite. Highly recommended.",
-    author: "Zainab Ahmed",
-    role: "Regular Customer"
+    quote: "Tried the roll samosa and wontons they were incredible. Very crunchy and delicious, my family enjoyed it very much will buy again InshaAllah",
+    author: "Rukhsana",
+    role: "Happy Customer"
   },
   {
     quote: "I've tried many frozen food options, but this is by far the best. It's so convenient without compromising on the authentic taste.",
@@ -54,7 +54,7 @@ const TestimonialSection = () => {
               {testimonials.map((testimonial, index) => (
                 <CarouselItem key={index}>
                   <div className="flex flex-col items-center justify-center p-2">
-                    <blockquote className="font-display text-2xl md:text-3xl italic text-foreground leading-relaxed mb-8">
+                    <blockquote className="font-display text-2xl md:text-3xl italic text-foreground leading-relaxed mb-8 whitespace-pre-line">
                       "{testimonial.quote}"
                     </blockquote>
                     <div>
